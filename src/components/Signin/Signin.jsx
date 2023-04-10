@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context.jsx";
 
 const Signin = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const { setUserToken } = useGlobalContext();
+  const { setUserToken, setUserData, setIsLoading, isLoading, userData } =
+    useGlobalContext();
+
   const HandleSignin = async (values) => {
     setIsLoading(true);
     try {
@@ -18,6 +19,9 @@ const Signin = () => {
       localStorage.setItem("userToken", data.token);
       setUserToken(localStorage.getItem("userToken", data.token));
       setIsLoading(false);
+      console.log(values);
+      setUserData(values);
+      console.log(userData);
       navigate("/");
     } catch (error) {
       setIsLoading(false);
@@ -27,17 +31,14 @@ const Signin = () => {
 
   let formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
-      rePassword: "",
-      phone: "",
     },
     onSubmit: HandleSignin,
   });
 
   return (
-    <section className="form register-form">
+    <section className="form">
       <h3>Signin</h3>
       <form action="" onSubmit={formik.handleSubmit}>
         <input
@@ -56,6 +57,10 @@ const Signin = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
         />
+        <Link to="/forgetpassword" className="forget-password-link">
+          forget password...?
+        </Link>
+
         {isLoading ? (
           <span className="loader"></span>
         ) : (

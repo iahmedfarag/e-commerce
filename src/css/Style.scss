@@ -53,6 +53,7 @@ img {
   }
   form {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 20px;
     input {
@@ -64,6 +65,14 @@ img {
       &:focus {
         outline: none;
         border-bottom: 1px solid #3498db;
+      }
+    }
+    .forget-password-link {
+      display: block;
+      width: fit-content;
+      font-size: 14px;
+      &:hover {
+        color: blue;
       }
     }
     button {
@@ -78,9 +87,6 @@ img {
     }
   }
 }
-
-@import "../components/Signup/Signup";
-@import "../components/Signin/Signin";
 // !navbar
 nav {
   background-color: #f6f6f6;
@@ -91,7 +97,7 @@ nav {
     justify-content: space-between;
     .nav-search {
       width: 40%;
-      padding: 5px 15px;
+      padding: 10px 15px;
       border-radius: 25px;
       border: none;
       outline: none;
@@ -106,8 +112,12 @@ nav {
       display: flex;
       gap: 20px;
     }
+    svg {
+      font-size: 20px;
+    }
   }
 }
+
 // ! nopage
 .nopage {
   text-align: center;
@@ -117,40 +127,41 @@ nav {
     color: #3498db;
   }
 }
+
 // ! loader
 .loader-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  .loader {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: inline-block;
-    position: relative;
-    border: 2px solid #3498db;
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 2px solid #3498db;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  &::after {
+    content: "";
     box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    &::after {
-      content: "";
-      box-sizing: border-box;
-      position: absolute;
-      left: 4px;
-      top: 4px;
-      border: 2px solid #fff;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    border: 2px solid #fff;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
 
-    @keyframes rotation {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }
@@ -248,6 +259,128 @@ section {
     .category-name {
       text-align: center;
       transition: 0.2s;
+    }
+  }
+}
+
+.single-product {
+  padding-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  // * slider
+  .product-slider {
+    width: calc(50% - 10px);
+    .slick-slider {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+    .slick-list {
+      .slick-slide {
+        img {
+          height: 600px;
+          object-fit: cover;
+        }
+      }
+    }
+    .slider-btns {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      // padding: 0;
+      margin: 0;
+      li {
+        flex: 1;
+        cursor: pointer;
+        &.slick-active {
+          opacity: 0.5;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  // * info
+  .product-info {
+    width: calc(50% - 10px);
+    .product-title {
+      margin-bottom: 3px;
+    }
+    .product-desc {
+      margin-bottom: 30px;
+    }
+    .product-brand {
+      margin-bottom: 10px;
+    }
+    .product-rate {
+      width: fit-content;
+      color: gold;
+      span {
+        margin-left: 10px;
+        color: #000;
+        font-size: 14px;
+      }
+    }
+    .product-price {
+      margin: 30px 0;
+      font-size: 24px;
+    }
+    .add-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      .quantity {
+        display: flex;
+        align-items: center;
+        span {
+          margin-right: 20px;
+        }
+        .circle {
+          display: flex;
+          align-items: center;
+          border: 1px solid grey;
+          border-radius: 25px;
+          .num {
+            margin: 0 15px;
+            font-size: 18px;
+          }
+          .plus {
+            cursor: pointer;
+            padding: 10px 20px;
+            &:hover {
+              color: #3498db;
+            }
+          }
+          .minus {
+            cursor: pointer;
+            padding: 10px 20px;
+            &:hover {
+              color: #3498db;
+            }
+          }
+        }
+      }
+      .add-to-cart {
+        padding: 15px 20px;
+        border-radius: 25px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        outline: none;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+      .item-wish-icon {
+        font-size: 30px;
+        color: #3498db;
+        cursor: pointer;
+      }
     }
   }
 }

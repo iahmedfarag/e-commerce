@@ -13,6 +13,10 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import NoPage from "./components/NoPage/NoPage";
 import WishList from "./components/WishList/WishList";
 import CategoryProducts from "./components/CategoryProducts/CategoryProducts";
+import ForgetPassword from "./components/ForgetPassword/ForgetPassword";
+import VerifyCode from "./components/VerifyCode/VerifyCode";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
+
 export {
   Cart,
   CategorySlider,
@@ -29,4 +33,7 @@ export {
   NoPage,
   WishList,
   CategoryProducts,
+  ForgetPassword,
+  VerifyCode,
+  ResetPassword,
 };

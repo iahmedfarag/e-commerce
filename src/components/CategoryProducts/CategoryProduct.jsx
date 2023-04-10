@@ -1,8 +1,9 @@
 import React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const CategoryProduct = ({ prd }) => {
-  const { title, price, imageCover } = prd;
+  const { title, price, imageCover, _id } = prd;
   const titleArr = title.split(" ");
   let newTitle = "";
   if (titleArr.length > 4) {
@@ -14,9 +15,9 @@ const CategoryProduct = ({ prd }) => {
     <article className="item">
       <div className="item-img-container">
         <img src={imageCover} className="item-img" />
-        <a href="" className="item-view-btn">
+        <Link to={`/products/${_id}`} className="item-view-btn">
           Quick View
-        </a>
+        </Link>
       </div>
       <div className="item-info">
         <p className="item-name">{newTitle}</p>

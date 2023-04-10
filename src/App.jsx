@@ -12,10 +12,12 @@ import {
   NoPage,
   WishList,
   CategoryProducts,
+  ForgetPassword,
+  VerifyCode,
+  ResetPassword,
 } from "./Pages.js";
 import { useGlobalContext } from "./context.jsx";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 const App = () => {
   const { setUserToken } = useGlobalContext();
 
@@ -31,8 +33,12 @@ const App = () => {
         { path: "profile", element: <UserProfile /> },
         { path: "products", element: <Products /> },
         { path: "WishList", element: <WishList /> },
-        { path: "singleProduct/:id", element: <SingleProduct /> },
+        { path: "products/:id", element: <SingleProduct /> },
         { path: "category/:slug", element: <CategoryProducts /> },
+        { path: "forgetpassword", element: <ForgetPassword /> },
+        { path: "forgetpassword", element: <ForgetPassword /> },
+        { path: "verifycode", element: <VerifyCode /> },
+        { path: "resetpassword", element: <ResetPassword /> },
         { path: "*", element: <NoPage /> },
       ],
     },
