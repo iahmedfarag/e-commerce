@@ -47,6 +47,7 @@ export const AppProvider = ({ children }) => {
       console.log(error);
     }
   };
+
   // ! get category products
   const getCategoryProducts = async (slug) => {
     setIsLoading(true);
@@ -64,6 +65,7 @@ export const AppProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
+
   // ! use effect
   useEffect(() => {
     // !user token
