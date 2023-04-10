@@ -64,7 +64,6 @@ export const AppProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
-
   // ! use effect
   useEffect(() => {
     // !user token
@@ -87,8 +86,9 @@ export const AppProvider = ({ children }) => {
         getProducts,
         categories,
         homeIsLoading,
-        getCategoryProducts,
         categoryProducts,
+        getCategoryProducts,
+        setCategoryProducts,
       }}
     >
       {children}

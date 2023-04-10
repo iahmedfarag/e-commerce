@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useGlobalContext } from "../../context.jsx";
 import CategoryProduct from "./CategoryProduct.jsx";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const CategoryProducts = () => {
-  const { isLoading, categoryProducts } = useGlobalContext();
+  let params = useParams();
+  const { isLoading, categoryProducts, setIsLoading, setCategoryProducts } =
+    useGlobalContext();
 
+  const getCategoryProducts = async (slug) => {
+    setIsLoading(true);
+    try {
+      let { data } = await axios.get(
+        "https://route-ecommerce.onrender.com/api/v1/products"
+      );
+      let catProductsArr = data.data.filter(
+        (prd) => prd.category.slug === slug
+      );
+      setCategoryProducts(catProductsArr);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    getCategoryProducts(params.slug);
+  }, []);
   if (isLoading) {
     return (
       <div className="loader-container">
@@ -12,7 +35,6 @@ const CategoryProducts = () => {
       </div>
     );
   }
-
   return (
     <section className="products">
       {categoryProducts?.length < 1 ? (

@@ -32,7 +32,7 @@ const App = () => {
         { path: "products", element: <Products /> },
         { path: "WishList", element: <WishList /> },
         { path: "singleProduct/:id", element: <SingleProduct /> },
-        { path: "category/:id", element: <CategoryProducts /> },
+        { path: "category/:slug", element: <CategoryProducts /> },
         { path: "*", element: <NoPage /> },
       ],
     },
