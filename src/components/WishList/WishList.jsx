@@ -8,6 +8,7 @@ const WishList = () => {
     getUserWhishList();
     console.log(whishList);
   }, []);
+
   if (isLoading) {
     return (
       <div className="loader-container">

@@ -4,72 +4,58 @@ import { useParams } from "react-router-dom";
 
 const AppContext = createContext();
 export const AppProvider = ({ children }) => {
-  const [homeIsLoading, setHomeIsLoading] = useState({
-    categorySlider: false,
-    products: false,
+  const [isHomeLoading, setIsHomeLoading] = useState({
+    isCategoriesLoading: false,
+    pageLoading: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
-  const [singleProduct, setSingleProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [cart, setCart] = useState(null);
   const [whishList, setWishList] = useState(null);
-  const [userData, setUserData] = useState(null);
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isCodeCorrect, setIsCodeCorrect] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [isPassChanged, setIsPassChanged] = useState(false);
+  const [cartLength, setCartLength] = useState(null);
   // ! get all products
   const getProducts = async () => {
-    setHomeIsLoading({ ...homeIsLoading, products: true });
+    setIsLoading(true);
     try {
       let { data } = await axios.get(
         "https://route-ecommerce.onrender.com/api/v1/products"
       );
       setProducts(data.data);
-      setHomeIsLoading({ ...homeIsLoading, products: false });
+      setIsLoading(false);
     } catch (error) {
-      setHomeIsLoading({ ...homeIsLoading, products: false });
+      setIsLoading(false);
       console.log(error);
     }
   };
 
   // ! get all categories
-  const getCateogries = async () => {
-    setHomeIsLoading({ ...homeIsLoading, categorySlider: true });
-
+  const getCategories = async () => {
+    setIsHomeLoading({ ...isHomeLoading, isCategoriesLoading: true });
     try {
       let { data } = await axios.get(
         "https://route-ecommerce.onrender.com/api/v1/categories"
       );
       setCategories(data.data);
-      setHomeIsLoading({ ...homeIsLoading, categorySlider: false });
+      setIsHomeLoading({ ...isHomeLoading, isCategoriesLoading: false });
     } catch (error) {
-      setHomeIsLoading({ ...homeIsLoading, categorySlider: false });
+      setIsHomeLoading({ ...isHomeLoading, isCategoriesLoading: false });
       console.log(error);
     }
   };
 
-  // ! single product
-  const getSingleProduct = async (id) => {
-    setIsLoading(true);
-    try {
-      let { data } = await axios.get(
-        `https://route-ecommerce.onrender.com/api/v1/products/${id}`
-      );
-      setIsLoading(false);
-      setSingleProduct(data.data);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
-    }
-  };
+  // ! api header
   const headers = {
     token: localStorage.getItem("userToken"),
   };
 
+  // ! add to cart
   const addToCart = (productId) => {
     return axios
       .post(
@@ -77,10 +63,14 @@ export const AppProvider = ({ children }) => {
         { productId },
         { headers }
       )
-      .then((res) => res)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
       .catch((err) => err);
   };
 
+  // ! get user cart
   const getUserCart = async () => {
     setIsLoading(true);
     try {
@@ -89,13 +79,15 @@ export const AppProvider = ({ children }) => {
         { headers }
       );
       setIsLoading(false);
-      setCart(data.data);
+      setCart(data.data.products);
+      setCartLength(data.numOfCartItems);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
     }
   };
 
+  // ! add to which list
   const addWhishList = (productId) => {
     return axios
       .post(
@@ -107,6 +99,7 @@ export const AppProvider = ({ children }) => {
       .catch((err) => err);
   };
 
+  // ! get user which list
   const getUserWhishList = async () => {
     setIsLoading(true);
     try {
@@ -122,6 +115,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // ! forget password
   const forgetPassword = (email) => {
     event.preventDefault();
     return axios
@@ -139,6 +133,7 @@ export const AppProvider = ({ children }) => {
       .catch((err) => err);
   };
 
+  // ! verify code
   const verifyCode = (resetCode) => {
     event.preventDefault();
     return axios
@@ -156,6 +151,7 @@ export const AppProvider = ({ children }) => {
       .catch((err) => err);
   };
 
+  // ! reset password
   const resetPassword = (email, newPassword) => {
     event.preventDefault();
     return axios
@@ -173,15 +169,12 @@ export const AppProvider = ({ children }) => {
       .catch((err) => err);
   };
 
-  // ! use effect
+  // ! useEffect Function
   useEffect(() => {
-    // !user token
     localStorage.getItem("userToken")
       ? setUserToken(localStorage.getItem("userToken"))
       : null;
-    // ! get products
     getProducts();
-    getCateogries();
   }, []);
 
   return (
@@ -194,9 +187,6 @@ export const AppProvider = ({ children }) => {
         setIsLoading,
         getProducts,
         categories,
-        homeIsLoading,
-        getSingleProduct,
-        singleProduct,
         setQuantity,
         quantity,
         addToCart,
@@ -205,7 +195,6 @@ export const AppProvider = ({ children }) => {
         addWhishList,
         getUserWhishList,
         whishList,
-        setUserData,
         forgetPassword,
         isCodeSent,
         verifyCode,
@@ -217,6 +206,9 @@ export const AppProvider = ({ children }) => {
         resetPassword,
         setIsPassChanged,
         isPassChanged,
+        isHomeLoading,
+        getCategories,
+        cartLength,
       }}
     >
       {children}

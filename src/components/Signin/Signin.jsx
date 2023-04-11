@@ -6,8 +6,7 @@ import { useGlobalContext } from "../../context.jsx";
 
 const Signin = () => {
   const navigate = useNavigate();
-  const { setUserToken, setUserData, setIsLoading, isLoading, userData } =
-    useGlobalContext();
+  const { setUserToken, setIsLoading, isLoading } = useGlobalContext();
 
   const HandleSignin = async (values) => {
     setIsLoading(true);
@@ -19,9 +18,6 @@ const Signin = () => {
       localStorage.setItem("userToken", data.token);
       setUserToken(localStorage.getItem("userToken", data.token));
       setIsLoading(false);
-      console.log(values);
-      setUserData(values);
-      console.log(userData);
       navigate("/");
     } catch (error) {
       setIsLoading(false);

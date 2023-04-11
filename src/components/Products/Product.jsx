@@ -17,7 +17,7 @@ const Product = ({ prd }) => {
     <article className="item">
       <div className="item-img-container">
         <img src={imageCover} className="item-img" />
-        <Link to={`products/${_id}`} className="item-view-btn">
+        <Link to={`/products/${_id}`} className="item-view-btn">
           Quick View
         </Link>
       </div>

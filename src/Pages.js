@@ -16,6 +16,7 @@ import CategoryProducts from "./components/CategoryProducts/CategoryProducts";
 import ForgetPassword from "./components/ForgetPassword/ForgetPassword";
 import VerifyCode from "./components/VerifyCode/VerifyCode";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
+import BestSeller from "./components/BestSeller/BestSeller";
 
 export {
   Cart,
@@ -36,4 +37,5 @@ export {
   ForgetPassword,
   VerifyCode,
   ResetPassword,
+  BestSeller,
 };

@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Cart,
   CategorySlider,
-  Footer,
-  Layout,
   MainSlider,
-  Navbar,
   Products,
   SingleProduct,
   Signup,
   Signin,
   UserProfile,
+  BestSeller,
 } from "../../Pages.js";
 import { useGlobalContext } from "../../context.jsx";
 const Home = () => {
-  const { homeIsLoading } = useGlobalContext();
-  if (homeIsLoading.products || homeIsLoading.categorySlider) {
+  const { isHomeLoading, getCategories } = useGlobalContext();
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  if (isHomeLoading.isCategoriesLoading) {
     return (
       <div className="loader-container">
         <span className="loader"></span>
@@ -24,8 +27,9 @@ const Home = () => {
   }
   return (
     <>
+      <MainSlider />
       <CategorySlider />
-      <Products />
+      <BestSeller />
     </>
   );
 };

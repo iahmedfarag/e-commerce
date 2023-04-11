@@ -7,19 +7,33 @@ import {
   AiOutlineHeart,
 } from "react-icons/ai";
 import Slider from "react-slick";
+import axios from "axios";
 
 const SingleProduct = () => {
   let params = useParams();
+  const [singleProduct, setSingleProduct] = useState(null);
   const {
     isLoading,
-    getSingleProduct,
-    singleProduct,
     setQuantity,
     quantity,
     addToCart,
     addWhishList,
+    setIsLoading,
   } = useGlobalContext();
-
+  // ! get single product
+  const getSingleProduct = async (id) => {
+    setIsLoading(true);
+    try {
+      let { data } = await axios.get(
+        `https://route-ecommerce.onrender.com/api/v1/products/${id}`
+      );
+      setSingleProduct(data.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
   const changeQunatity = (x) => {
     if (x < 1 && quantity == 1) {
       return;
@@ -27,37 +41,29 @@ const SingleProduct = () => {
     setQuantity(quantity + x);
   };
 
-  const settings = {
-    customPaging: function (i) {
-      return (
-        <a className="slider-btn">
-          <img src={singleProduct?.images[i]} />
-        </a>
-      );
-    },
-    dots: true,
-    dotsClass: "slider-btns",
-    infinite: true,
-    speed: 700,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
   // const settings = {
   //   customPaging: function (i) {
   //     return (
-  //       <a>
+  //       <a className="slider-btn">
   //         <img src={singleProduct?.images[i]} />
   //       </a>
   //     );
   //   },
   //   dots: true,
-  //   dotsClass: "slick-dots slick-thumb",
+  //   dotsClass: "slider-btns",
   //   infinite: true,
-  //   speed: 500,
+  //   speed: 700,
   //   slidesToShow: 1,
   //   slidesToScroll: 1,
   // };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 700,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   useEffect(() => {
     getSingleProduct(params.id);
@@ -74,11 +80,12 @@ const SingleProduct = () => {
   return (
     <article className="single-product">
       <div className="product-slider">
-        <Slider {...settings}>
-          {singleProduct?.images.map((img, index) => {
-            return <img src={img} key={index} />;
+        {/* <Slider {...settings}>
+          {singleProduct?.images?.map((img, index) => {
+            return <img src={img} key={index} alt="img" />;
           })}
-        </Slider>
+        </Slider> */}
+        <img src={singleProduct?.imageCover} alt="" height={500} />
       </div>
       <div className="product-info">
         <h1 className="product-title">{singleProduct?.title}</h1>
