@@ -3,10 +3,12 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context.jsx";
+import * as Yup from "yup";
 
 const Signin = () => {
   const navigate = useNavigate();
   const { setUserToken, setIsLoading, isLoading } = useGlobalContext();
+  const [errorMsg, setErrorMsg] = useState("");
 
   const HandleSignin = async (values) => {
     setIsLoading(true);
@@ -22,14 +24,23 @@ const Signin = () => {
     } catch (error) {
       setIsLoading(false);
       console.log(error);
+      setErrorMsg(error.response.data.message);
     }
   };
+
+  const validationSchema = Yup.object({
+    email: Yup.string().required("email is required").email("email is invalid"),
+    password: Yup.string()
+      .required("password is required")
+      .matches(/^[A-Z][a-z0-9]{5,10}$/, "password must starts with uppecase"),
+  });
 
   let formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    validationSchema,
     onSubmit: HandleSignin,
   });
 
@@ -38,13 +49,18 @@ const Signin = () => {
       <h3>Signin</h3>
       <form action="" onSubmit={formik.handleSubmit}>
         <input
-          type="email"
+          type="text"
           placeholder="Email"
           id="email"
           name="email"
           value={formik.values.email}
           onChange={formik.handleChange}
         />
+        {formik.errors.email && formik.touched.email ? (
+          <span className="alert-error">{formik.errors.email}</span>
+        ) : (
+          ""
+        )}
         <input
           type="password"
           placeholder="Password"
@@ -53,6 +69,11 @@ const Signin = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
         />
+        {formik.errors.password && formik.touched.password ? (
+          <span className="alert-error">{formik.errors.password}</span>
+        ) : (
+          ""
+        )}
         <Link to="/forgetpassword" className="forget-password-link">
           forget password...?
         </Link>

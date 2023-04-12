@@ -1,7 +1,7 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { createContext, useState, useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
 const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [isHomeLoading, setIsHomeLoading] = useState({
@@ -20,6 +20,7 @@ export const AppProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState("");
   const [isPassChanged, setIsPassChanged] = useState(false);
   const [cartLength, setCartLength] = useState(null);
+  const baseUrl = "https://route-ecommerce.onrender.com/";
   // ! get all products
   const getProducts = async () => {
     setIsLoading(true);
@@ -65,6 +66,8 @@ export const AppProvider = ({ children }) => {
       )
       .then((res) => {
         console.log(res);
+        setCartLength(res.data.numOfCartItems);
+        toast.success(res.data.message, { autoClose: 1000 });
         return res;
       })
       .catch((err) => err);
@@ -118,6 +121,8 @@ export const AppProvider = ({ children }) => {
   // ! forget password
   const forgetPassword = (email) => {
     event.preventDefault();
+    setIsLoading(true);
+
     return axios
       .post(
         `https://route-ecommerce.onrender.com/api/v1/auth/forgotPasswords`,
@@ -128,14 +133,20 @@ export const AppProvider = ({ children }) => {
         if (res.data.statusMsg == "success") {
           setIsCodeSent(true);
         }
+        setIsLoading(false);
+
         return res;
       })
-      .catch((err) => err);
+      .catch((err) => {
+        setIsLoading(false);
+        return err;
+      });
   };
 
   // ! verify code
   const verifyCode = (resetCode) => {
     event.preventDefault();
+    setIsLoading(true);
     return axios
       .post(
         `https://route-ecommerce.onrender.com/api/v1/auth/verifyResetCode`,
@@ -146,14 +157,20 @@ export const AppProvider = ({ children }) => {
         if (res.data.status === "Success") {
           setIsCodeCorrect(true);
         }
+        setIsLoading(false);
         return res;
       })
-      .catch((err) => err);
+      .catch((err) => {
+        setIsLoading(false);
+        return err;
+      });
   };
 
   // ! reset password
   const resetPassword = (email, newPassword) => {
     event.preventDefault();
+    setIsLoading(true);
+
     return axios
       .put(`https://route-ecommerce.onrender.com/api/v1/auth/resetPassword`, {
         email,
@@ -163,10 +180,27 @@ export const AppProvider = ({ children }) => {
         if (res.data.token) {
           setIsPassChanged(true);
         }
-        console.log(res);
+        setIsLoading(false);
         return res;
       })
-      .catch((err) => err);
+      .catch((err) => {
+        setIsLoading(false);
+        return err;
+      });
+  };
+
+  const updateCart = async (count, id) => {
+    try {
+      let { data } = await axios.put(
+        `https://route-ecommerce.onrender.com/api/v1/cart/${id}`,
+        { count },
+        { headers }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      console.log("user cart", cart);
+    }
   };
 
   // ! useEffect Function
@@ -175,6 +209,7 @@ export const AppProvider = ({ children }) => {
       ? setUserToken(localStorage.getItem("userToken"))
       : null;
     getProducts();
+    getUserCart();
   }, []);
 
   return (
@@ -209,6 +244,7 @@ export const AppProvider = ({ children }) => {
         isHomeLoading,
         getCategories,
         cartLength,
+        updateCart,
       }}
     >
       {children}

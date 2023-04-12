@@ -2,6 +2,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 
 const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +25,20 @@ const Signup = () => {
     }
   };
 
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .required("name is required")
+      .min(3, "minLength is 3")
+      .max(10, "maxLength is 10"),
+    email: Yup.string().required("email is required").email("email is invalid"),
+    password: Yup.string()
+      .required("password is required")
+      .matches(/^[A-Z][a-z0-9]{5,10}$/, "password mush starts with uppercase"),
+    rePassword: Yup.string()
+      .required("repassword is required")
+      .oneOf([Yup.ref("password")], "password and repassword doesn't matched"),
+  });
+
   let formik = useFormik({
     initialValues: {
       name: "",
@@ -32,6 +47,7 @@ const Signup = () => {
       rePassword: "",
       phone: "01069858429",
     },
+    validationSchema,
     onSubmit: HandleSignup,
   });
 
@@ -46,7 +62,13 @@ const Signup = () => {
           id="name"
           value={formik.values.name}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
+        {formik.errors.name && formik.touched.name ? (
+          <span className="alert-error">{formik.errors.name}</span>
+        ) : (
+          ""
+        )}
         <input
           type="text"
           placeholder="Email"
@@ -54,7 +76,13 @@ const Signup = () => {
           id="email"
           value={formik.values.email}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
+        {formik.errors.email && formik.touched.email ? (
+          <span className="alert-error">{formik.errors.email}</span>
+        ) : (
+          ""
+        )}
         <input
           type="password"
           placeholder="Password"
@@ -62,7 +90,13 @@ const Signup = () => {
           id="password"
           value={formik.values.password}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
+        {formik.errors.password && formik.touched.password ? (
+          <span className="alert-error">{formik.errors.password}</span>
+        ) : (
+          ""
+        )}
         <input
           type="password"
           placeholder="RePassword"
@@ -70,8 +104,13 @@ const Signup = () => {
           id="rePassword"
           value={formik.values.rePassword}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
-
+        {formik.errors.rePassword && formik.touched.rePassword ? (
+          <span className="alert-error">{formik.errors.rePassword}</span>
+        ) : (
+          ""
+        )}
         {isLoading ? (
           <span className="loader"></span>
         ) : (

@@ -2,15 +2,10 @@ import React, { useEffect } from "react";
 import { useGlobalContext } from "../../context.jsx";
 import { AiOutlineClose } from "react-icons/ai";
 const Cart = () => {
-  const { isLoading, getUserCart, cart } = useGlobalContext();
-
+  const { isLoading, getUserCart, cart, updateCart } = useGlobalContext();
   useEffect(() => {
     getUserCart();
-    if (cart) {
-      console.log(cart);
-    }
   }, []);
-
   if (isLoading) {
     return (
       <div className="loader-container">
@@ -28,7 +23,6 @@ const Cart = () => {
         <p className="cart-remove">Remove</p>
       </div>
       {cart?.map((item) => {
-        console.log(item);
         const { count, price, product, _id } = item;
         return (
           <div className="row cart-item">
@@ -38,7 +32,14 @@ const Cart = () => {
             </div>
             <p className="cart-price item-price">{price} egp</p>
             <div className="cart-quantity item-quantity">
-              <input type="number" min={1} value={count} />
+              <input
+                type="number"
+                min={1}
+                value={count}
+                onChange={(e) => {
+                  updateCart("9", _id);
+                }}
+              />
             </div>
             <p className="cart-total item-total">{price * count} egp</p>
             <AiOutlineClose className="cart-remove item-remove" />

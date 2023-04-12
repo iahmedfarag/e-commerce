@@ -85,7 +85,9 @@ const SingleProduct = () => {
             return <img src={img} key={index} alt="img" />;
           })}
         </Slider> */}
-        <img src={singleProduct?.imageCover} alt="" height={500} />
+        <div className="product-slider">
+          <img src={singleProduct?.imageCover} alt="" height={500} />
+        </div>
       </div>
       <div className="product-info">
         <h1 className="product-title">{singleProduct?.title}</h1>
