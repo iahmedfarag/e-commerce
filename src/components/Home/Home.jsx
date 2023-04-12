@@ -28,8 +28,8 @@ const Home = () => {
   return (
     <>
       <MainSlider />
-      <CategorySlider />
-      <BestSeller />
+      {/* <CategorySlider /> */}
+      {/* <BestSeller /> */}
     </>
   );
 };

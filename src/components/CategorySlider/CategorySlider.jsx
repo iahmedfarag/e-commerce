@@ -41,12 +41,12 @@ const CategorySlider = () => {
       <h2>Categories</h2>
       <Slider {...settings}>
         {categories?.map((cat) => {
-          const { image, name, _id, slug } = cat;
+          console.log(cat);
           return (
-            <div className="category" key={_id}>
-              <img src={image} alt={name} className="category-img" />
-              <Link to={`category/${slug}`}>
-                <p className="category-name">{name}</p>
+            <div className="category">
+              <img src={""} alt={"name"} className="category-img" />
+              <Link to={`category/${"slug"}`}>
+                <p className="category-name">{"name"}</p>
               </Link>
             </div>
           );

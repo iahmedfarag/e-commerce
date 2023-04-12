@@ -28,7 +28,7 @@ const Navbar = () => {
               </Link>
               <Link to="/cart" className="nav-btn">
                 <AiOutlineShoppingCart />
-                <span>{cartLength}</span>
+                <span>{cartLength ? cartLength : "0"}</span>
               </Link>
               <Link className="nav-btn" onClick={logout}>
                 Logout
@@ -64,7 +64,7 @@ const Navbar = () => {
               </Link>
               <Link to="/cart" className="nav-btn">
                 <AiOutlineShoppingCart />
-                <span>{cartLength}</span>
+                <span>{cartLength ? cartLength : "0"}</span>
               </Link>
               <Link className="nav-btn" onClick={logout}>
                 Logout

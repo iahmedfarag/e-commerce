@@ -17,6 +17,8 @@ import ForgetPassword from "./components/ForgetPassword/ForgetPassword";
 import VerifyCode from "./components/VerifyCode/VerifyCode";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import BestSeller from "./components/BestSeller/BestSeller";
+import ShippingAddress from "./components/shippingAddress/shippingAddress";
+import UserOrders from "./components/UserOrders/UserOrders";
 
 export {
   Cart,
@@ -38,4 +40,6 @@ export {
   VerifyCode,
   ResetPassword,
   BestSeller,
+  ShippingAddress,
+  UserOrders,
 };

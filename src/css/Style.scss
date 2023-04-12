@@ -487,66 +487,148 @@ footer {
 
 .cart {
   margin-top: 50px;
-  height: 50vh;
-  overflow-y: scroll;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  .row {
+  flex-wrap: wrap;
+  gap: 20px;
+  .items {
+    align-self: baseline;
     display: flex;
-    align-items: center;
-    &.cart-header {
-      background-color: #f6f6f6;
-      padding: 20px;
-      border-radius: 25px;
-      p {
+    flex-direction: column;
+    gap: 15px;
+    border: 1px solid #d0d3d4;
+    width: calc(60% - 20px);
+    padding-bottom: 10px;
+    @media (max-width: 992px) {
+      width: 100%;
+    }
+    .row {
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      &.cart-header {
+        background-color: #f6f6f6;
+        padding: 20px 10px;
       }
-    }
-    .cart-details {
-      width: 50%;
-    }
-    .cart-price {
-      width: calc(50% / 4);
-      text-align: center;
-    }
-    .cart-quantity {
-      width: calc(50% / 4);
-      text-align: center;
-    }
-    .cart-total {
-      width: calc(50% / 4);
-      text-align: center;
-    }
-    .cart-remove {
-      width: calc(50% / 4);
-      text-align: center;
-    }
-    &.cart-item {
       .cart-details {
+        width: 50%;
+        @media (max-width: 768px) {
+          width: 30%;
+        }
+      }
+      .cart-price {
+        width: calc(50% / 4);
+        text-align: center;
+        @media (max-width: 768px) {
+          width: calc(70% / 4);
+        }
+      }
+      .cart-quantity {
+        width: calc(50% / 4);
+        text-align: center;
+        @media (max-width: 768px) {
+          width: calc(70% / 4);
+        }
+      }
+      .cart-total {
+        width: calc(50% / 4);
+        text-align: center;
+        @media (max-width: 768px) {
+          width: calc(70% / 4);
+        }
+      }
+      .cart-remove {
+        width: calc(50% / 4);
+        text-align: center;
+        @media (max-width: 768px) {
+          width: calc(70% / 4);
+        }
+      }
+      // !item
+      &.cart-item {
+        .cart-details {
+          width: 50%;
+          display: flex;
+          align-items: center;
+
+          @media (max-width: 768px) {
+            width: 30%;
+            // background-color: red;
+          }
+          .item-name {
+            @media (max-width: 768px) {
+              display: none;
+            }
+          }
+          .item-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            margin-right: 10px;
+          }
+        }
+
+        .item-quantity {
+          input {
+            width: 50px;
+            height: 40px;
+            text-align: center;
+          }
+        }
+        .item-remove {
+          cursor: pointer;
+          font-size: 20px;
+          &:hover {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+  .checkout {
+    align-self: baseline;
+    border: 1px solid #d0d3d4;
+    padding: 20px;
+    width: 40%;
+    @media (max-width: 992px) {
+      width: 100%;
+    }
+
+    h3 {
+      margin-bottom: 20px;
+    }
+    .checkout-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      .line {
         display: flex;
-        align-items: center;
-        .item-img {
-          width: 70px;
-          height: 70px;
-          object-fit: cover;
-          margin-right: 10px;
+        &.shipping {
+          span {
+            font-size: 14px;
+          }
         }
-        .item-name {
+        &.total {
+          span {
+            font-weight: bold;
+          }
         }
-      }
-      .item-price {
-      }
-      .item-quantity {
-        input {
-          width: 50px;
-          height: 40px;
-          text-align: center;
+        p {
+          width: 25%;
+        }
+        span {
+          width: 75%;
         }
       }
-      .item-total {
-      }
-      .item-remove {
-        cursor: pointer;
+      .checkout-btn {
+        text-align: center;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        &:hover {
+          opacity: 0.7;
+        }
       }
     }
   }

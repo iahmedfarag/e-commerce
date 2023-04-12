@@ -15,6 +15,8 @@ import {
   ForgetPassword,
   VerifyCode,
   ResetPassword,
+  ShippingAddress,
+  UserOrders,
 } from "./Pages.js";
 import { useGlobalContext } from "./context.jsx";
 
@@ -40,6 +42,8 @@ const App = () => {
         { path: "verifycode", element: <VerifyCode /> },
         { path: "resetpassword", element: <ResetPassword /> },
         { path: "products", element: <Products /> },
+        { path: "shippingaddress", element: <ShippingAddress /> },
+        { path: "allorders", element: <UserOrders /> },
         { path: "*", element: <NoPage /> },
       ],
     },
