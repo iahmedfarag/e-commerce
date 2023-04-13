@@ -132,7 +132,15 @@ export const AppProvider = ({ children }) => {
         toast.success(res.data.message, { autoClose: 1000, toastId: customId });
         return res;
       })
-      .catch((err) => err);
+      .catch((err) => {
+        const customId = "custom-id-yes";
+        toast.error("you have to signin", {
+          autoClose: 1000,
+          toastId: customId,
+        });
+
+        return err;
+      });
   };
 
   // ! get user cart
@@ -197,7 +205,14 @@ export const AppProvider = ({ children }) => {
 
         return res;
       })
-      .catch((err) => err);
+      .catch((err) => {
+        const customId = "custom-id-yes";
+        toast.error("you have to signin", {
+          autoClose: 1000,
+          toastId: customId,
+        });
+        return err;
+      });
   };
 
   // ! remove whish list
