@@ -66,7 +66,7 @@ const App = () => {
           ),
         },
         {
-          path: "https://creator-ecommerce.netlify.app//allorders",
+          path: "http://creator-ecommerce.netlify.app/allorders",
           element: (
             <ProtectedRoute>
               <UserOrders />
