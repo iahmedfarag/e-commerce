@@ -1,7 +1,7 @@
 import React from "react";
 
 const Footer = () => {
-  return <footer>@Comma</footer>;
+  return <footer>@Creator</footer>;
 };
 
 export default Footer;

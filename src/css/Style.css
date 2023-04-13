@@ -232,6 +232,7 @@ nav .container svg {
 }
 
 .products {
+  padding-bottom: 60px;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -368,6 +369,7 @@ nav .container svg {
 
 .single-product {
   padding-top: 50px;
+  padding-bottom: 60px;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -383,6 +385,7 @@ nav .container svg {
 @media (max-width: 768px) {
   .single-product .product-slider {
     width: 100%;
+    margin-bottom: 20px;
   }
 }
 .single-product .product-info {
@@ -512,7 +515,7 @@ footer {
   width: 100%;
   bottom: 0;
   left: 0;
-  padding: 20px 0;
+  padding: 10px;
 }
 
 .cart {
@@ -520,6 +523,7 @@ footer {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  padding-bottom: 50px;
 }
 .cart .items {
   align-self: baseline;
@@ -683,7 +687,7 @@ footer {
 }
 
 .orders {
-  padding-bottom: 50px;
+  padding-bottom: 60px;
   display: flex;
   flex-direction: column;
   gap: 20px;
