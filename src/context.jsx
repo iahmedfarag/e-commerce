@@ -253,7 +253,7 @@ export const AppProvider = ({ children }) => {
     setIsLoading(true);
     try {
       let { data } = await axios.post(
-        `https://route-ecommerce-app.vercel.app/api/v1/orders/checkout-session/${id}?url=http://localhost:5173`,
+        `https://route-ecommerce-app.vercel.app/api/v1/orders/checkout-session/${id}?url=https://creator-ecommerce.netlify.app/`,
         { ShippingAddress },
         { headers }
       );
