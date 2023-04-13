@@ -25,7 +25,6 @@ const Products = () => {
         whishList?.map((whishItem) => {
           if (whishItem._id === prd._id) {
             inWish = true;
-            console.log(inWish);
           }
         });
         return <Product key={prd._id} prd={prd} inWish={inWish} />;

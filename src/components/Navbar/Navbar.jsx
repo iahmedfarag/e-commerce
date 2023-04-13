@@ -48,7 +48,7 @@ const Navbar = () => {
         </div>
         <div className="left">
           <Link to="/" className="nav-logo">
-            Comma
+            creator
           </Link>
           <Link to="/products" className="shop-now">
             Shop Now

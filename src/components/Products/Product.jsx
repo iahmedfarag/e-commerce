@@ -13,7 +13,6 @@ const Product = ({ prd, inWish }) => {
   } else {
     newTitle = title;
   }
-  console.log(inWish);
   return (
     <>
       <article className="item">

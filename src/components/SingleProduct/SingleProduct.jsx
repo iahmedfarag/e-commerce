@@ -3,12 +3,12 @@ import { useGlobalContext } from "../../context.jsx";
 import { useParams } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import axios from "axios";
+import Slider from "react-slick";
 
 const SingleProduct = () => {
   let params = useParams();
   const [singleProduct, setSingleProduct] = useState(null);
-  const [isWish, setIsWish] = useState(false);
-
+  const [inWish, setInWish] = useState(false);
   const {
     isLoading,
     setQuantity,
@@ -18,7 +18,13 @@ const SingleProduct = () => {
     addWhishList,
     removeWhishList,
   } = useGlobalContext();
-  // ! get single product
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
   const getSingleProduct = async (id) => {
     setIsLoading(true);
     try {
@@ -32,19 +38,12 @@ const SingleProduct = () => {
       setIsLoading(false);
     }
   };
+
   const changeQunatity = (x) => {
     if (x < 1 && quantity == 1) {
       return;
     }
     setQuantity(quantity + x);
-  };
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 700,
-    slidesToShow: 1,
-    slidesToScroll: 1,
   };
 
   useEffect(() => {
@@ -62,15 +61,14 @@ const SingleProduct = () => {
   return (
     <article className="single-product">
       <div className="product-slider">
-        {/* <Slider {...settings}>
-          {singleProduct?.images?.map((img, index) => {
-            return <img src={img} key={index} alt="img" />;
+        <Slider {...settings}>
+          {singleProduct?.images.map((img) => {
+            return <img src={img} height={500} />;
           })}
-        </Slider> */}
-        <div className="product-slider">
-          <img src={singleProduct?.imageCover} alt="" height={500} />
-        </div>
+        </Slider>
+        {/* <img src={singleProduct?.imageCover} alt="" height={500} /> */}
       </div>
+
       <div className="product-info">
         <h1 className="product-title">{singleProduct?.title}</h1>
         <p className="product-brand">{singleProduct?.brand?.name}</p>
@@ -79,7 +77,11 @@ const SingleProduct = () => {
         </p>
         <p className="product-price">{singleProduct?.price} EGP</p>
         <p className="product-desc">{singleProduct?.description}</p>
-
+        <ul>
+          <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit?</li>
+          <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit?</li>
+          <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit?</li>
+        </ul>
         <div className="add-section">
           <div className="quantity">
             <span>Quantity:</span>
@@ -101,24 +103,6 @@ const SingleProduct = () => {
           >
             ADD TO CART
           </button>
-
-          {isWish ? (
-            <AiFillHeart
-              className="item-wish-icon active"
-              onClick={() => {
-                setIsWish(false);
-                removeWhishList(singleProduct?._id);
-              }}
-            />
-          ) : (
-            <AiOutlineHeart
-              className="item-wish-icon"
-              onClick={() => {
-                addWhishList(singleProduct?._id);
-                setIsWish(true);
-              }}
-            />
-          )}
         </div>
       </div>
     </article>

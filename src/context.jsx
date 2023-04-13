@@ -227,6 +227,7 @@ export const AppProvider = ({ children }) => {
       );
       setWishList(data?.data);
       setWishListLength(data.count);
+      console.log(data?.data);
     } catch (error) {
       console.log(error);
     }

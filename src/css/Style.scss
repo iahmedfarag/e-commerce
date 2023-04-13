@@ -266,7 +266,7 @@ nav {
       overflow: hidden;
       transition: 0.2s;
       &:hover ~ .item-view-btn {
-        bottom: 5px;
+        bottom: 15px;
       }
     }
     .item-view-btn {
@@ -281,7 +281,7 @@ nav {
       bottom: -50px;
       transition: 0.3s;
       &:hover {
-        bottom: 5px;
+        bottom: 15px;
         opacity: 0.9;
       }
     }
@@ -367,6 +367,10 @@ nav {
   // * slider
   .product-slider {
     width: calc(50% - 10px);
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
     @media (max-width: 768px) {
       width: 100%;
     }
@@ -384,7 +388,12 @@ nav {
     .product-brand {
       margin-bottom: 10px;
     }
-
+    ul {
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
     .product-rate {
       width: fit-content;
       color: gold;
