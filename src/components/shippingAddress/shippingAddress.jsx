@@ -3,7 +3,7 @@ import { useGlobalContext } from "../../context.jsx";
 import { useFormik } from "formik";
 
 const ShippingAddress = () => {
-  const { cartId, onlinePayment } = useGlobalContext();
+  const { cartId, onlinePayment, isLoading } = useGlobalContext();
 
   const handleSumbit = (values) => {
     onlinePayment(cartId, values);
@@ -17,6 +17,13 @@ const ShippingAddress = () => {
     },
     onSubmit: handleSumbit,
   });
+  if (isLoading) {
+    return (
+      <div className="loader-container">
+        <span className="loader"></span>
+      </div>
+    );
+  }
   return (
     <section className="form">
       <h3>Checkout</h3>

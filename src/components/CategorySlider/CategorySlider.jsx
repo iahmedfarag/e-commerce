@@ -1,57 +1,26 @@
 import React, { useEffect } from "react";
-import Slider from "react-slick";
 import { useGlobalContext } from "../../context.jsx";
 import { Link, useNavigate } from "react-router-dom";
-
+import women from "../../assets/women.png";
+import electronics from "../../assets/electronics.png";
+import men from "../../assets/men.png";
 const CategorySlider = () => {
-  const { categories } = useGlobalContext();
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 200,
-    slidesToShow: 6,
-    slidesToScroll: 5,
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 5,
-        },
-      },
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        },
-      },
-    ],
-  };
-
+  const categories = [
+    { id: 1, title: "woman", image: women },
+    { id: 2, title: "men", image: men },
+    { id: 3, title: "electronics", image: electronics },
+  ];
   return (
-    <section className="categories-slider">
-      <h2>Categories</h2>
-      <Slider {...settings}>
-        {categories?.map((cat) => {
-          console.log(cat);
-          return (
-            <div className="category">
-              <img src={""} alt={"name"} className="category-img" />
-              <Link to={`category/${"slug"}`}>
-                <p className="category-name">{"name"}</p>
-              </Link>
-            </div>
-          );
-        })}
-      </Slider>
+    <section className="categories">
+      {categories.map((cat) => {
+        return (
+          <article className="category">
+            <Link to={`category/${cat.title}`}>
+              <img src={cat.image} alt="" />
+            </Link>
+          </article>
+        );
+      })}
     </section>
   );
 };

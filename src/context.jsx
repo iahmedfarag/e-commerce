@@ -11,7 +11,6 @@ export const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [products, setProducts] = useState(null);
-  const [categories, setCategories] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [cart, setCart] = useState(null);
   const [whishList, setWishList] = useState(null);
@@ -20,6 +19,7 @@ export const AppProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState("");
   const [isPassChanged, setIsPassChanged] = useState(false);
   const [cartLength, setCartLength] = useState(null);
+  const [wishListLength, setWishListLength] = useState(null);
   const [cartId, setCartId] = useState(null);
   const [userOrders, setUserOrders] = useState(null);
   // ! get all products
@@ -30,22 +30,13 @@ export const AppProvider = ({ children }) => {
         "https://route-ecommerce-app.vercel.app/api/v1/products"
       );
 
-      setProducts(data.data);
-      getCategories(data.data);
+      setProducts(data?.data);
       setIsLoading(false);
+      console.log(data?.data);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
     }
-  };
-
-  // ! get all categories
-  const getCategories = (prds) => {
-    setIsHomeLoading({ ...isHomeLoading, isCategoriesLoading: true });
-    const categriesFilter = prds?.map((prd) => {
-      return { name: prd.category.name, image: prd.category.image };
-    });
-    setIsHomeLoading({ ...isHomeLoading, isCategoriesLoading: false });
   };
 
   // ! api header
@@ -101,7 +92,6 @@ export const AppProvider = ({ children }) => {
         return err;
       });
   };
-
   // ! reset password
   const resetPassword = (email, newPassword) => {
     event.preventDefault();
@@ -134,8 +124,10 @@ export const AppProvider = ({ children }) => {
         { headers }
       )
       .then((res) => {
+        const customId = "custom-id-yes";
+
         setCartLength(res.data.numOfCartItems);
-        toast.success(res.data.message, { autoClose: 1000 });
+        toast.success(res.data.message, { autoClose: 1000, toastId: customId });
         return res;
       })
       .catch((err) => err);
@@ -150,7 +142,7 @@ export const AppProvider = ({ children }) => {
         { headers }
       );
       setIsLoading(false);
-      setCart(data.data.products);
+      setCart(data.data);
       setCartLength(data.numOfCartItems);
       setCartId(data.data._id);
     } catch (error) {
@@ -166,7 +158,7 @@ export const AppProvider = ({ children }) => {
         { count },
         { headers }
       );
-      setCart(data.data.products);
+      setCart(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -180,7 +172,7 @@ export const AppProvider = ({ children }) => {
         { headers }
       );
       setCartLength(data.numOfCartItems);
-      setCart(data.data.products);
+      setCart(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -194,26 +186,51 @@ export const AppProvider = ({ children }) => {
         { productId },
         { headers }
       )
-      .then((res) => res)
+      .then((res) => {
+        console.log(res);
+        const customId = "custom-id-yes";
+        toast.success(res.data.message, { autoClose: 1000, toastId: customId });
+        setWishListLength(res.data.data.length);
+        getUserWhishList();
+
+        return res;
+      })
+      .catch((err) => err);
+  };
+
+  // ! remove whish list
+  const removeWhishList = (productId) => {
+    return axios
+      .delete(
+        `https://route-ecommerce-app.vercel.app/api/v1/wishlist/${productId}`,
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        const customId = "custom-id-yes";
+        toast.success(res.data.message, { autoClose: 1000, toastId: customId });
+        setWishListLength(res.data.data.length);
+        getUserWhishList();
+        return res;
+      })
       .catch((err) => err);
   };
 
   // ! get user which list
   const getUserWhishList = async () => {
-    setIsLoading(true);
     try {
       let { data } = await axios.get(
         `https://route-ecommerce-app.vercel.app/api/v1/wishlist`,
         { headers }
       );
-      setIsLoading(false);
-      setWishList(data.data);
+      setWishList(data?.data);
+      setWishListLength(data.count);
     } catch (error) {
-      setIsLoading(false);
       console.log(error);
     }
   };
 
+  // ! online payment
   const onlinePayment = async (id, ShippingAddress) => {
     setIsLoading(true);
     try {
@@ -231,6 +248,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // ! get user orders
   const getUserOrders = async (id) => {
     setIsLoading(true);
     try {
@@ -238,7 +256,6 @@ export const AppProvider = ({ children }) => {
         `https://route-ecommerce-app.vercel.app/api/v1/orders/user/${id}`
       );
       setIsLoading(false);
-      console.log(data);
       setUserOrders(data);
     } catch (error) {
       setIsLoading(false);
@@ -251,6 +268,7 @@ export const AppProvider = ({ children }) => {
     localStorage.getItem("userToken")
       ? setUserToken(localStorage.getItem("userToken"))
       : null;
+    getUserWhishList();
     getProducts();
     getUserCart();
   }, []);
@@ -264,7 +282,6 @@ export const AppProvider = ({ children }) => {
         isLoading,
         setIsLoading,
         getProducts,
-        categories,
         setQuantity,
         quantity,
         addToCart,
@@ -285,7 +302,6 @@ export const AppProvider = ({ children }) => {
         setIsPassChanged,
         isPassChanged,
         isHomeLoading,
-        getCategories,
         cartLength,
         updateCart,
         removeCartProduct,
@@ -294,6 +310,9 @@ export const AppProvider = ({ children }) => {
         tokenDecode,
         getUserOrders,
         userOrders,
+        wishListLength,
+        removeWhishList,
+        getUserWhishList,
       }}
     >
       {children}

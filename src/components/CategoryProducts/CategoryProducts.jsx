@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const CategoryProducts = () => {
-  const { isLoading, setIsLoading } = useGlobalContext();
+  const { isLoading, setIsLoading, whishList } = useGlobalContext();
   const [categoryProducts, setCategoryProducts] = useState(null);
   let params = useParams();
 
@@ -43,7 +43,14 @@ const CategoryProducts = () => {
         <h1>no products avaiable</h1>
       ) : (
         categoryProducts?.map((prd) => {
-          return <CategoryProduct key={prd._id} prd={prd} />;
+          let inWish = false;
+          whishList?.map((whishItem) => {
+            if (whishItem._id === prd._id) {
+              inWish = true;
+              console.log(inWish);
+            }
+          });
+          return <CategoryProduct key={prd._id} prd={prd} inWish={inWish} />;
         })
       )}
     </section>

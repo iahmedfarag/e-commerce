@@ -12,11 +12,9 @@ import {
 } from "../../Pages.js";
 import { useGlobalContext } from "../../context.jsx";
 const Home = () => {
-  const { isHomeLoading, getCategories } = useGlobalContext();
+  const { isHomeLoading } = useGlobalContext();
 
-  useEffect(() => {
-    getCategories();
-  }, []);
+  useEffect(() => {}, []);
 
   if (isHomeLoading.isCategoriesLoading) {
     return (
@@ -28,7 +26,7 @@ const Home = () => {
   return (
     <>
       <MainSlider />
-      {/* <CategorySlider /> */}
+      <CategorySlider />
       {/* <BestSeller /> */}
     </>
   );

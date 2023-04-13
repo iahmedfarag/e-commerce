@@ -8,7 +8,8 @@ import {
 } from "react-icons/ai";
 const Navbar = () => {
   const navigate = useNavigate();
-  const { userToken, setUserToken, cartLength } = useGlobalContext();
+  const { userToken, setUserToken, cartLength, wishListLength } =
+    useGlobalContext();
 
   const logout = () => {
     localStorage.removeItem("userToken");
@@ -24,7 +25,7 @@ const Navbar = () => {
             <>
               <Link to="/wishlist" className="nav-btn">
                 <AiOutlineHeart />
-                <span>0</span>
+                <span>{wishListLength ? wishListLength : "0"}</span>
               </Link>
               <Link to="/cart" className="nav-btn">
                 <AiOutlineShoppingCart />
@@ -60,7 +61,7 @@ const Navbar = () => {
             <>
               <Link to="/wishlist" className="nav-btn">
                 <AiOutlineHeart />
-                <span>0</span>
+                <span>{wishListLength ? wishListLength : "0"}</span>
               </Link>
               <Link to="/cart" className="nav-btn">
                 <AiOutlineShoppingCart />

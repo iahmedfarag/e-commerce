@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context.jsx";
 import { useParams } from "react-router-dom";
-import {
-  AiFillMinusSquare,
-  AiFillPlusSquare,
-  AiOutlineHeart,
-} from "react-icons/ai";
-import Slider from "react-slick";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import axios from "axios";
 
 const SingleProduct = () => {
   let params = useParams();
   const [singleProduct, setSingleProduct] = useState(null);
+  const [isWish, setIsWish] = useState(false);
+
   const {
     isLoading,
     setQuantity,
     quantity,
     addToCart,
-    addWhishList,
     setIsLoading,
+    addWhishList,
+    removeWhishList,
   } = useGlobalContext();
   // ! get single product
   const getSingleProduct = async (id) => {
@@ -40,22 +38,6 @@ const SingleProduct = () => {
     }
     setQuantity(quantity + x);
   };
-
-  // const settings = {
-  //   customPaging: function (i) {
-  //     return (
-  //       <a className="slider-btn">
-  //         <img src={singleProduct?.images[i]} />
-  //       </a>
-  //     );
-  //   },
-  //   dots: true,
-  //   dotsClass: "slider-btns",
-  //   infinite: true,
-  //   speed: 700,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 1,
-  // };
 
   const settings = {
     dots: true,
@@ -119,12 +101,24 @@ const SingleProduct = () => {
           >
             ADD TO CART
           </button>
-          <AiOutlineHeart
-            className="item-wish-icon"
-            onClick={() => {
-              addWhishList(singleProduct?._id);
-            }}
-          />
+
+          {isWish ? (
+            <AiFillHeart
+              className="item-wish-icon active"
+              onClick={() => {
+                setIsWish(false);
+                removeWhishList(singleProduct?._id);
+              }}
+            />
+          ) : (
+            <AiOutlineHeart
+              className="item-wish-icon"
+              onClick={() => {
+                addWhishList(singleProduct?._id);
+                setIsWish(true);
+              }}
+            />
+          )}
         </div>
       </div>
     </article>
