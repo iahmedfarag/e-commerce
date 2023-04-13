@@ -43,8 +43,10 @@ export const AppProvider = ({ children }) => {
   const headers = {
     token: localStorage.getItem("userToken"),
   };
-
-  const tokenDecode = jwtDecode(localStorage.getItem("userToken"));
+  let tokenDecode = null;
+  if (localStorage.getItem("userToken")) {
+    tokenDecode = jwtDecode(localStorage.getItem("userToken"));
+  }
   // ! forget password
   const forgetPassword = (email) => {
     event.preventDefault();

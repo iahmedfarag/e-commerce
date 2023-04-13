@@ -17,6 +17,7 @@ import {
   ResetPassword,
   ShippingAddress,
   UserOrders,
+  ProtectedRoute,
 } from "./Pages.js";
 import { useGlobalContext } from "./context.jsx";
 
@@ -31,10 +32,24 @@ const App = () => {
         { index: true, element: <Home /> },
         { path: "signin", element: <Signin /> },
         { path: "signup", element: <Signup /> },
-        { path: "cart", element: <Cart /> },
+        {
+          path: "cart",
+          element: (
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          ),
+        },
         { path: "profile", element: <UserProfile /> },
         { path: "products", element: <Products /> },
-        { path: "WishList", element: <WishList /> },
+        {
+          path: "WishList",
+          element: (
+            <ProtectedRoute>
+              <WishList />
+            </ProtectedRoute>
+          ),
+        },
         { path: "products/:id", element: <SingleProduct /> },
         { path: "category/:slug", element: <CategoryProducts /> },
         { path: "forgetpassword", element: <ForgetPassword /> },
@@ -42,8 +57,22 @@ const App = () => {
         { path: "verifycode", element: <VerifyCode /> },
         { path: "resetpassword", element: <ResetPassword /> },
         { path: "products", element: <Products /> },
-        { path: "shippingaddress", element: <ShippingAddress /> },
-        { path: "allorders", element: <UserOrders /> },
+        {
+          path: "shippingaddress",
+          element: (
+            <ProtectedRoute>
+              <ShippingAddress />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "allorders",
+          element: (
+            <ProtectedRoute>
+              <UserOrders />
+            </ProtectedRoute>
+          ),
+        },
         { path: "*", element: <NoPage /> },
       ],
     },

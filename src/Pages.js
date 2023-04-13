@@ -19,6 +19,7 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import BestSeller from "./components/BestSeller/BestSeller";
 import ShippingAddress from "./components/shippingAddress/shippingAddress";
 import UserOrders from "./components/UserOrders/UserOrders";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 export {
   Cart,
@@ -42,4 +43,5 @@ export {
   BestSeller,
   ShippingAddress,
   UserOrders,
+  ProtectedRoute,
 };
