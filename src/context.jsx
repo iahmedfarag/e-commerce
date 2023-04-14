@@ -145,13 +145,13 @@ export const AppProvider = ({ children }) => {
 
   // ! get user cart
   const getUserCart = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
       let { data } = await axios.get(
         `https://route-ecommerce-app.vercel.app/api/v1/cart`,
         { headers }
       );
-      setIsLoading(false);
+      // setIsLoading(false);
       setCart(data.data);
       setCartLength(data.numOfCartItems);
       setCartId(data.data._id);
@@ -287,9 +287,10 @@ export const AppProvider = ({ children }) => {
       ? setUserToken(localStorage.getItem("userToken"))
       : null;
     getUserWhishList();
+    getUserCart();
     getProducts();
     getUserCart();
-  }, []);
+  }, [userToken]);
 
   return (
     <AppContext.Provider

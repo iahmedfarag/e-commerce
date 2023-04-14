@@ -16,7 +16,7 @@ const CategoryProducts = () => {
         "https://route-ecommerce.onrender.com/api/v1/products"
       );
       let catProductsArr = data.data.filter(
-        (prd) => prd.category.slug === slug
+        (prd) => prd?.category?.slug === slug
       );
       setCategoryProducts(catProductsArr);
       setIsLoading(false);
@@ -28,6 +28,7 @@ const CategoryProducts = () => {
 
   useEffect(() => {
     getCategoryProducts(params.slug);
+    console.log(params);
   }, []);
 
   if (isLoading) {
@@ -43,6 +44,7 @@ const CategoryProducts = () => {
         <h1>no products avaiable</h1>
       ) : (
         categoryProducts?.map((prd) => {
+          console.log(prd);
           let inWish = false;
           whishList?.map((whishItem) => {
             if (whishItem._id === prd._id) {

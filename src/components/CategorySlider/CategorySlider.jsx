@@ -15,9 +15,9 @@ const CategorySlider = () => {
       {categories.map((cat) => {
         return (
           <article className="category">
-            <Link to={`category/${cat.title}`}>
-              <img src={cat.image} alt="" />
-            </Link>
+            {/* <Link to={`category/${cat.title}`}> */}
+            <img src={cat.image} alt="" />
+            {/* </Link> */}
           </article>
         );
       })}
